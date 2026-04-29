@@ -168,13 +168,21 @@ function collectWorkingTreeContext(cwd, state) {
   };
 }
 
+const MAX_DIFF_BYTES = 60000;
+
 function collectBranchContext(cwd, baseRef) {
   const mergeBase = gitChecked(cwd, ["merge-base", "HEAD", baseRef]).stdout.trim();
   const commitRange = `${mergeBase}..HEAD`;
   const currentBranch = getCurrentBranch(cwd);
   const logOutput = gitChecked(cwd, ["log", "--oneline", "--decorate", commitRange]).stdout.trim();
   const diffStat = gitChecked(cwd, ["diff", "--stat", commitRange]).stdout.trim();
-  const diff = gitChecked(cwd, ["diff", "--binary", "--no-ext-diff", "--submodule=diff", commitRange]).stdout;
+  let diff = gitChecked(cwd, ["diff", "--no-ext-diff", "--submodule=diff", commitRange]).stdout;
+
+  let truncated = false;
+  if (Buffer.byteLength(diff, "utf8") > MAX_DIFF_BYTES) {
+    diff = diff.slice(0, MAX_DIFF_BYTES);
+    truncated = true;
+  }
 
   return {
     mode: "branch",
@@ -182,7 +190,7 @@ function collectBranchContext(cwd, baseRef) {
     content: [
       formatSection("Commit Log", logOutput),
       formatSection("Diff Stat", diffStat),
-      formatSection("Branch Diff", diff)
+      formatSection("Branch Diff", diff + (truncated ? "\n\n[... diff truncated to fit context window — use tool calls to inspect remaining files ...]" : ""))
     ].join("\n")
   };
 }
