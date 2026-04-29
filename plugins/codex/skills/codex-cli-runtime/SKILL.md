@@ -22,6 +22,7 @@ Execution rules:
 - Leave model unset by default. Add `--model` only when the user explicitly asks for one.
 - Map `spark` to `--model gpt-5.3-codex-spark`.
 - Default to a write-capable Codex run by adding `--write` unless the user explicitly asks for read-only behavior or only wants review, diagnosis, or research without edits.
+- Treat `--full-access` as a routing flag: if the literal token `--full-access` appears anywhere in the user's request, strip it from the task text and pass `--full-access` through to `task`. Also add `--full-access` when natural-language asks for it ("full access", "danger access", "open the network", "let codex ssh", "讓 codex 連 DB / 連內網", "開沙箱"). It maps Codex CLI sandbox to `danger-full-access` (no FS or network restrictions). Never enable by default; it permits unrestricted shell, file, and network operations.
 
 Command selection:
 - Use exactly one `task` invocation per rescue handoff.
