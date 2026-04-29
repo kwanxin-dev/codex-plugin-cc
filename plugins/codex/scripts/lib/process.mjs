@@ -7,10 +7,10 @@ export function runCommand(command, args = [], options = {}) {
     env: options.env,
     encoding: "utf8",
     input: options.input,
+    maxBuffer: options.maxBuffer ?? 50 * 1024 * 1024,
     stdio: options.stdio ?? "pipe",
     shell: process.platform === "win32",
-    windowsHide: true,
-    maxBuffer: 50 * 1024 * 1024
+    windowsHide: true
   });
 
   return {
