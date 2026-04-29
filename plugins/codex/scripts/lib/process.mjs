@@ -9,7 +9,8 @@ export function runCommand(command, args = [], options = {}) {
     input: options.input,
     stdio: options.stdio ?? "pipe",
     shell: process.platform === "win32",
-    windowsHide: true
+    windowsHide: true,
+    maxBuffer: 50 * 1024 * 1024
   });
 
   return {
