@@ -1,5 +1,22 @@
 # Codex plugin for Claude Code
 
+> ⚠️ **DEPRECATED — 2026-04-30**
+>
+> 本 fork（`kwanxin-dev/codex-plugin-cc`）已搬進 [`kwanxin-dev/ai-toolkit`](https://github.com/kwanxin-dev/ai-toolkit) marketplace。未來 upstream sync、`--full-access` patch、本地修正都在 ai-toolkit 維護。
+>
+> **新安裝指令**：
+>
+> ```bash
+> claude plugin marketplace add kwanxin-dev/ai-toolkit
+> claude plugin install codex
+> ```
+>
+> 既有從本 fork 安裝的使用者遷移步驟見 [ai-toolkit PR #42](https://github.com/kwanxin-dev/ai-toolkit/pull/42)。
+>
+> 本 repo 為 read-only archive，不再接受 PR / issue。對 plugin 本身的問題請開到 ai-toolkit。
+
+---
+
 Use Codex from inside Claude Code for code reviews or to delegate tasks to Codex.
 
 This plugin is for Claude Code users who want an easy way to start using Codex from the workflow
